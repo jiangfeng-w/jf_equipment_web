@@ -37,8 +37,4 @@
     // 设备列表
     const tableList = reactive([])
 </script>
-<style lang="scss" scoped>
-    .equiplist {
-        margin-top: 20px;
-    }
-</style>
+<style lang="scss" scoped></style>

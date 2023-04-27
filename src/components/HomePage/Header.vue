@@ -53,7 +53,6 @@
                 justify-content: flex-end;
                 width: 100px;
                 user-select: none;
-                transform: translateX(-18px);
             }
             .el-menu {
                 border-bottom: #1f2533;

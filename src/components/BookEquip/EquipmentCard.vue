@@ -64,8 +64,12 @@
     const router = useRouter()
     // 预约设备详情页
     const goToBookEquip = () => {
-        const url = router.resolve({ name: 'equipdetail', params: { id: props.id } }).href
-        window.open(url, '_blank')
+        // const url = router.resolve({ name: 'equipdetail', params: { id: props.id } }).href
+        // window.open(url, '_blank')
+        router.push({
+            name: 'equipdetail',
+            params: { id: props.id },
+        })
     }
 </script>
 <style lang="scss" scoped>

@@ -19,6 +19,7 @@
         width: 100vw;
         height: 60px;
         padding: 0;
+        margin-bottom: 20px;
     }
     .el-main {
         width: 100vw;
