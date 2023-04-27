@@ -17,11 +17,11 @@
     }
     .el-header {
         width: 100vw;
-        // width: 100%;
         height: 60px;
         padding: 0;
     }
     .el-main {
-        width: 1300px;
+        width: 100vw;
+        padding: 0 115px;
     }
 </style>

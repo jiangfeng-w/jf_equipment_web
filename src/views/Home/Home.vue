@@ -2,7 +2,10 @@
     <el-row :gutter="20">
         <el-col :span="16">
             <div class="left">
-                <el-card shadow="never">
+                <el-card
+                    shadow="never"
+                    :body-style="{ padding: '10px' }"
+                >
                     <template #header>
                         <div class="card-header">
                             <span class="card_title">最近预约</span>
@@ -44,7 +47,10 @@
         </el-col>
         <el-col :span="8">
             <div class="right">
-                <el-card shadow="never">
+                <el-card
+                    shadow="never"
+                    :body-style="{ padding: '10px' }"
+                >
                     <template #header>
                         <div class="card-header">
                             <span class="card_title">热门设备</span>

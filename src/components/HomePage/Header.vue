@@ -17,7 +17,7 @@
                 text-color="#fff"
             >
                 <el-menu-item index="/home">首页</el-menu-item>
-                <el-menu-item index="/book">预约设备</el-menu-item>
+                <el-menu-item index="/equiplist">预约设备</el-menu-item>
                 <el-menu-item index="/train">操作培训</el-menu-item>
             </el-menu>
             <div class="login">登录</div>
@@ -44,6 +44,7 @@
                 display: flex;
                 justify-content: flex-start;
                 font-size: 18px;
+                user-select: none;
                 width: 300px;
             }
             .login {
@@ -51,6 +52,8 @@
                 display: flex;
                 justify-content: flex-end;
                 width: 100px;
+                user-select: none;
+                transform: translateX(-18px);
             }
             .el-menu {
                 border-bottom: #1f2533;

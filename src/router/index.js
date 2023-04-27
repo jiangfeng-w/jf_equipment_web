@@ -36,9 +36,15 @@ const routes = [
             },
             // 预约
             {
-                path: '/book',
-                name: 'book',
-                component: () => import('@/views/Book/Book.vue'),
+                path: '/equiplist',
+                name: 'equiplist',
+                component: () => import('@/views/BookEquip/EquipList.vue'),
+            },
+            // 设备信息
+            {
+                path: '/equipdetail/:id',
+                name: 'equipdetail',
+                component: () => import('@/views/BookEquip/EquipDetail.vue'),
             },
             // 培训
             {
