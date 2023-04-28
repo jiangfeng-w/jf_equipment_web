@@ -20,15 +20,58 @@
                 <el-menu-item index="/equiplist">预约设备</el-menu-item>
                 <el-menu-item index="/train">操作培训</el-menu-item>
             </el-menu>
-            <div class="login">登录</div>
+
+            <!-- 右边 -->
+            <div class="right">
+                <!-- 下拉菜单 -->
+                <div
+                    class="logged"
+                    v-if="store.state.isLogin === 1"
+                >
+                    <el-dropdown class="logged">
+                        <span class="el-dropdown-link">
+                            欢迎您，{{ store.state.userInfo.name }}
+                            <el-avatar :src="store.state.userInfo.avatar" />
+                        </span>
+                        <template #dropdown>
+                            <el-dropdown-menu>
+                                <el-dropdown-item @click="logOut">个人中心</el-dropdown-item>
+                                <el-dropdown-item
+                                    @click="logOut"
+                                    divided
+                                >
+                                    退出登录
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </template>
+                    </el-dropdown>
+                </div>
+                <div
+                    class="login"
+                    @click="logOut"
+                    v-else
+                >
+                    登录
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
     import { useRoute, useRouter } from 'vue-router'
+    import { useStore } from 'vuex'
 
     const route = useRoute()
     const router = useRouter()
+    const store = useStore()
+
+    // 退出登录
+    const logOut = () => {
+        router.push('/login')
+        // localStorage.removeItem('token')
+        store.commit('clearUserInfo')
+        store.commit('changeIslogin', 0)
+    }
 </script>
 <style lang="scss" scoped>
     .navbar {
@@ -47,12 +90,34 @@
                 user-select: none;
                 width: 300px;
             }
-            .login {
-                cursor: pointer;
-                display: flex;
-                justify-content: flex-end;
-                width: 100px;
-                user-select: none;
+            .right {
+                .logged {
+                    color: #fff;
+                    display: flex;
+                    user-select: none;
+                    .el-dropdown-link {
+                        cursor: pointer;
+                        width: 150px;
+                        display: flex;
+                        align-items: center;
+                        .el-avatar {
+                            margin-left: 15px;
+                        }
+                    }
+                    :deep(.el-dropdown) {
+                        z-index: 999999999;
+                    }
+                }
+                .login {
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: flex-start;
+                    width: 45px;
+                    user-select: none;
+                }
+            }
+            .login:hover {
+                color: #ffd04b;
             }
             .el-menu {
                 border-bottom: #1f2533;

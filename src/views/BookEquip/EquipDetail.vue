@@ -50,7 +50,7 @@
                     label="设备信息"
                     name="equipinfo"
                 >
-                    <ul v-if="equipData.country">
+                    <ul v-if="equipData.name">
                         <li class="info-row">
                             <span class="info-key">设备国别：</span>
                             <span class="info-value">{{ equipData.country ? equipData.country : '*' }}</span>
