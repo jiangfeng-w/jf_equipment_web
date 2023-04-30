@@ -68,7 +68,7 @@
     // 退出登录
     const logOut = () => {
         router.push('/login')
-        // localStorage.removeItem('token')
+        localStorage.removeItem('token')
         store.commit('clearUserInfo')
         store.commit('changeIslogin', 0)
     }
