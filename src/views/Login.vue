@@ -118,11 +118,10 @@
                     const res = await axios.post('/web/user/login', loginForm)
                     // console.log(res.data)
                     if (res.status === 200) {
-                        router.push('/home')
                         // 存储用户信息
-
                         store.commit('changeUserInfo', res.data.data)
                         store.commit('changeIslogin', 1)
+                        router.push('/home')
                     }
                 } catch (error) {
                     loading.value = false

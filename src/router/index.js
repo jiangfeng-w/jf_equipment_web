@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '@/store'
 // 顶上的进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -18,6 +19,11 @@ const routes = [
         path: '/login',
         name: 'login',
         component: () => import('@/views/Login.vue'),
+    },
+    {
+        path: '/bindemail',
+        name: 'bindemail',
+        component: () => import('@/views/BindEmail.vue'),
     },
     {
         path: '/',
@@ -64,7 +70,17 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     // 打开进度条
     NProgress.start()
-    next()
+    // 跳转到登录
+    if (to.path === '/login') {
+        next()
+    } else {
+        // 如果是学生且并未绑定邮箱
+        if (store.state.userInfo.role === 4 && store.state.userInfo.is_bind_email === 0 && to.path !== '/bindemail') {
+            next('/bindemail')
+        } else {
+            next()
+        }
+    }
 })
 
 router.afterEach((to, from, next) => {
