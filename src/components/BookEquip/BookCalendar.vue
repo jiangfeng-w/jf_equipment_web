@@ -117,8 +117,8 @@
     const end = ref(dayjs().endOf('week'))
 
     // 截止日期--从今天开始，14天选择区间
-    const start_time = dayjs().startOf('day')
-    const over_time = dayjs().endOf('week').add(1, 'week')
+    const start_time = dayjs().startOf('day').add(1, 'day')
+    const over_time = dayjs().endOf('week').add(1, 'week').subtract(1, 'day')
 
     // 已占用
     const occupiedList = reactive(props.equipBook)
