@@ -139,7 +139,7 @@
                 // 发起请求，让后端发送验证码
                 try {
                     const res = await axios.post('/web/sendEmail', bindForm)
-                    console.log(res)
+                    // console.log(res)
                     if (res.status === 201) {
                         ElMessage.success(res.data.message)
                         // 绑定按钮取消禁用
