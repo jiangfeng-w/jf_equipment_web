@@ -295,6 +295,11 @@
     // 提交预约表单
     const submitBookForm = () => {
         loseFocus()
+        // 自己已经预约
+        if (current_select.value) {
+            ElMessage.warning('您已预约此设备其他时段')
+            return
+        }
         bookFormRef.value.validate(async isValid => {
             if (isValid) {
                 if (bookForm.book_date === null) {
