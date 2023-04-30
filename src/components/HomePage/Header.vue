@@ -88,7 +88,7 @@
                 justify-content: flex-start;
                 font-size: 18px;
                 user-select: none;
-                width: 300px;
+                width: 220px;
             }
             .right {
                 .logged {
@@ -97,7 +97,7 @@
                     user-select: none;
                     .el-dropdown-link {
                         cursor: pointer;
-                        width: 150px;
+                        // width: 200px;
                         display: flex;
                         align-items: center;
                         .el-avatar {
@@ -121,7 +121,8 @@
             }
             .el-menu {
                 border-bottom: #1f2533;
-                width: 100%;
+                width: 750px;
+                transform: translateX(-50px);
             }
         }
     }

@@ -125,6 +125,7 @@
                         store.commit('changeIslogin', 1)
                     }
                 } catch (error) {
+                    loading.value = false
                     ElMessage.error(error.response.data.error)
                 }
             }
@@ -182,75 +183,4 @@
         transform: translate(173px, -10px);
         margin-top: 10px;
     }
-
-    // .login_page {
-    //     height: 100%;
-    //     background-image: url('https://sso.swpu.edu.cn/linkid/api/image/download/1626424617933notloggedinbg1600900.jpg');
-    //     background-size: cover;
-    // }
-
-    // .login {
-    //     border-radius: 5px;
-    //     width: 400px;
-    //     position: fixed;
-    //     left: 50%;
-    //     top: 50%;
-    //     transform: translate(-50%, -50%);
-    //     background: white;
-    //     color: #333333;
-    //     padding: 20px;
-    //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    //     font-family: 'Roboto', sans-serif;
-    // }
-
-    // .login h2 {
-    //     font-size: 24px;
-    //     margin-bottom: 20px;
-    // }
-
-    // .loginForm {
-    //     margin-top: 20px;
-    // }
-
-    // .el-form-item__label {
-    //     font-size: 16px;
-    // }
-
-    // .el-input__inner {
-    //     font-size: 16px;
-    //     padding: 10px;
-    // }
-
-    // .el-form-item__error {
-    //     color: red;
-    // }
-
-    // .submit {
-    //     margin-top: 20px;
-    // }
-
-    // .el-button {
-    //     width: 100%;
-    //     background-color: #007aff;
-    //     border-color: #007aff;
-    //     transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-    // }
-
-    // .el-button:hover {
-    //     background-color: #0069d9;
-    //     border-color: #0062cc;
-    // }
-
-    // .forgetPassBtn {
-    //     font-size: 12px;
-    //     margin-top: 15px;
-    //     color: #007aff;
-    //     cursor: pointer;
-    // }
-
-    // @media (max-width: 768px) {
-    //     .login {
-    //         width: 90%;
-    //     }
-    // }
 </style>
