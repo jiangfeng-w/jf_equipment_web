@@ -235,15 +235,19 @@
     const getEquipBook = async () => {
         const res = await axios.get(`/web/equipment/book/${route.params.id}`)
         // console.log(res.data.data)
+        // 筛选出未过期的预约
+        const arr = res.data.data.filter(item => {
+            return item.book_date > dayjs().endOf('day').subtract(1, 'day')
+        })
         // 自己预约的
-        const arr1 = res.data.data.filter(item => {
+        const arr1 = arr.filter(item => {
             return item.apply_number === store.state.userInfo.number
         })
         if (arr1[0]) {
             current_select.value = arr1[0].book_date
         }
         // 被其他人预约的
-        const arr2 = res.data.data
+        const arr2 = arr
             .filter(item => {
                 return item.apply_number !== store.state.userInfo.number
             })
