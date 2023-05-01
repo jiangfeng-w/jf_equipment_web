@@ -1,9 +1,6 @@
 <template>
     <div>
-        <el-calendar
-            ref="calendar"
-            :range="[new Date(start), new Date(end)]"
-        >
+        <el-calendar ref="calendar">
             <template #header="{ date }">
                 <div class="header">
                     <div class="left">
@@ -46,21 +43,21 @@
                         <el-button-group class="btns">
                             <el-button
                                 size="small"
-                                @click="selectRange(-1)"
+                                @click="selectRange('prev-month')"
                             >
-                                上一周
+                                上个月
                             </el-button>
                             <el-button
                                 size="small"
-                                @click="selectRange(0)"
+                                @click="selectRange('today')"
                             >
-                                回到本周
+                                回到本月
                             </el-button>
                             <el-button
                                 size="small"
-                                @click="selectRange(1)"
+                                @click="selectRange('next-month')"
                             >
-                                下一周
+                                下个月
                             </el-button>
                         </el-button-group>
                     </div>
@@ -112,13 +109,9 @@
         }
     }
 
-    // 开始时间
-    const start = ref(dayjs().startOf('week'))
-    const end = ref(dayjs().endOf('week'))
-
-    // 截止日期--从今天开始，14天选择区间
+    // 预约截止日期--从明天开始到后14天选择区间
     const start_time = dayjs().startOf('day').add(1, 'day')
-    const over_time = dayjs().endOf('week').add(1, 'week').subtract(1, 'day')
+    const over_time = dayjs().endOf('day').add(14, 'day')
 
     // 已占用
     const occupiedList = reactive(props.equipBook)
@@ -133,10 +126,8 @@
         }
         // 不可选
         if (
-            dayjs(data.day).valueOf() < dayjs().startOf('day').valueOf() || //小于今天的日期禁用
-            dayjs(data.day).valueOf() >= dayjs(over_time).valueOf() || //大于截止日期
-            dayjs(data.day).valueOf() === dayjs(start.value).valueOf() || //周日
-            dayjs(data.day).valueOf() >= dayjs(end.value).subtract(1, 'day').valueOf() //周六
+            dayjs(data.day).valueOf() <= dayjs().startOf('day').valueOf() || //小于今天的日期禁用
+            dayjs(data.day).valueOf() > dayjs(over_time).valueOf() //大于截止日期
         ) {
             className = 'over_date'
         }
@@ -163,16 +154,7 @@
     const calendar = ref()
     const selectRange = val => {
         loseFocus()
-        if (val === 0) {
-            start.value = dayjs().startOf('week')
-            end.value = dayjs().endOf('week')
-        } else if (val === -1) {
-            start.value = start.value.subtract(1, 'week')
-            end.value = end.value.subtract(1, 'week')
-        } else {
-            start.value = start.value.add(1, 'week')
-            end.value = end.value.add(1, 'week')
-        }
+        calendar.value.selectDate(val)
     }
 </script>
 
