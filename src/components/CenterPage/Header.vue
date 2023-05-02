@@ -1,34 +1,42 @@
 <template>
-    <el-header>
-        <div class="top">
-            <!-- 左边 -->
-            <div class="left">
-                <BreadCrumb />
+    <div class="top">
+        <!-- 左边 -->
+        <div class="left">
+            <img
+                src="../../assets/logo.png"
+                alt=""
+            />
+            <div
+                class="home"
+                @click="router.push('/home')"
+            >
+                大型设备开放共享管理平台
             </div>
-
-            <!-- 右边 -->
-            <div class="right">
-                <!-- 下拉菜单 -->
-                <div
-                    class="go_home"
-                    @click="goHome"
-                >
-                    返回前台
-                </div>
-                <el-dropdown>
-                    <span class="center_dropdown">
-                        欢迎您，{{ store.state.userInfo.name }}
-                        <el-avatar :src="store.state.userInfo.avatar" />
-                    </span>
-                    <template #dropdown>
-                        <el-dropdown-menu>
-                            <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </template>
-                </el-dropdown>
-            </div>
+            <BreadCrumb />
         </div>
-    </el-header>
+
+        <!-- 右边 -->
+        <div class="right">
+            <!-- 下拉菜单 -->
+            <div
+                class="go_home"
+                @click="goHome"
+            >
+                返回前台
+            </div>
+            <el-dropdown>
+                <span class="center_dropdown">
+                    欢迎您，{{ store.state.userInfo.name }}
+                    <el-avatar :src="store.state.userInfo.avatar" />
+                </span>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
+            </el-dropdown>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -58,12 +66,12 @@
         display: flex;
         flex-direction: column;
         padding: 0;
-        height: 50px;
+        height: 60px;
         .top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 50px;
+            height: 60px;
             box-sizing: border-box;
             padding: 0 20px;
             box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
@@ -71,6 +79,15 @@
             .left {
                 display: flex;
                 align-items: center;
+                img {
+                    width: 24px;
+                    transform: translateY(3px);
+                    margin-right: 5px;
+                }
+                .home {
+                    margin-right: 20px;
+                    font-size: 24px;
+                }
             }
             .right {
                 display: flex;
