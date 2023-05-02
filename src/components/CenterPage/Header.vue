@@ -80,13 +80,13 @@
                 display: flex;
                 align-items: center;
                 img {
-                    width: 24px;
+                    width: 18px;
                     transform: translateY(3px);
                     margin-right: 5px;
                 }
                 .home {
                     margin-right: 20px;
-                    font-size: 24px;
+                    font-size: 18px;
                 }
             }
             .right {
