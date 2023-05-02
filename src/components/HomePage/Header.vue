@@ -35,7 +35,7 @@
                         </span>
                         <template #dropdown>
                             <el-dropdown-menu>
-                                <el-dropdown-item @click="logOut">个人中心</el-dropdown-item>
+                                <el-dropdown-item @click="router.push('/center')">个人中心</el-dropdown-item>
                                 <el-dropdown-item
                                     @click="logOut"
                                     divided
@@ -69,6 +69,7 @@
     const logOut = () => {
         router.push('/login')
         localStorage.removeItem('token')
+        store.commit('clearBreadCrumb')
         store.commit('clearUserInfo')
         store.commit('changeIslogin', 0)
     }

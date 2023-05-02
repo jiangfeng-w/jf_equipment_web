@@ -19,6 +19,7 @@ axios.interceptors.response.use(
         if (response.data.customData) {
             if (response.data.customData.code === -1) {
                 localStorage.removeItem('token')
+                store.commit('clearBreadCrumb')
                 store.commit('clearUserInfo')
                 store.commit('changeIslogin', 0)
             }
