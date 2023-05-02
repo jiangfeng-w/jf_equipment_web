@@ -60,6 +60,22 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/centerpage',
+        name: 'centerpage',
+        component: () => import('@/views/CenterPage.vue'),
+        children: [
+            // 个人中心
+            {
+                path: '/center',
+                name: 'center',
+                meta: {
+                    zh_name: ['个人资料'],
+                },
+                component: () => import('@/views/Center/Center.vue'),
+            },
+        ],
+    },
 ]
 
 const router = createRouter({
