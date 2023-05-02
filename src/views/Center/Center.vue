@@ -202,7 +202,6 @@
 
                         <ResetPass
                             :number="tempUserInfo.number"
-                            :role="tempUserInfo.role"
                             :email="tempUserInfo.email"
                             v-model="resetPassDalogVisible"
                             @closeDialog="closeDialog()"

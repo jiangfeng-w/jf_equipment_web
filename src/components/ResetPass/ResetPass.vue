@@ -23,26 +23,6 @@
                     placeholder="请输入学工号"
                 />
             </el-form-item>
-            <!-- 选择角色 -->
-            <el-form-item
-                label="选择角色"
-                prop="role"
-            >
-                <el-radio-group v-model="resetPass.role">
-                    <el-radio
-                        :label="1"
-                        border
-                    >
-                        系统管理员
-                    </el-radio>
-                    <el-radio
-                        :label="2"
-                        border
-                    >
-                        设备管理员
-                    </el-radio>
-                </el-radio-group>
-            </el-form-item>
             <!-- 邮箱 -->
             <el-form-item
                 label="电子邮箱"
@@ -69,7 +49,7 @@
                 <el-button
                     type="primary"
                     class="sendEmail"
-                    @click="sendEmail(emailRef)"
+                    @click="sendEmail()"
                     :disabled="disabled"
                 >
                     {{ sendEmailText }}
@@ -123,7 +103,6 @@
 
     const props = defineProps({
         number: String,
-        role: Number,
         email: String,
     })
 
@@ -131,11 +110,9 @@
     const fillInInfo = async () => {
         if (props.number) {
             resetPass.number = Number(props.number)
-            resetPass.role = props.role
             resetPass.email = props.email
         } else {
             resetPass.number = ''
-            resetPass.role = ''
             resetPass.email = ''
         }
     }
@@ -146,9 +123,6 @@
     // 表单
     const resetPassFormRef = ref()
     const resetPass = reactive({
-        // number: Number(props.number),
-        // email: '',
-        // role: '',
         authCode: '',
         newPassword: '',
         checkPass: '',
@@ -183,7 +157,6 @@
                 trigger: 'blur',
             },
         ],
-        role: [{ required: true, message: '请选择角色', trigger: 'blur' }],
         authCode: [
             { required: true, message: '请输入验证码', trigger: 'blur' },
             { min: 6, max: 6, message: '验证码长度为6位', trigger: 'blur' },
@@ -266,7 +239,7 @@
     const sendEmail = () => {
         loseFocus()
         // console.log(resetPassFormRef.value)
-        resetPassFormRef.value.validateField(['number', 'role', 'email'], async isValid => {
+        resetPassFormRef.value.validateField(['number', 'email'], async isValid => {
             // 验证通过
             if (isValid) {
                 // console.log(resetPass)
@@ -275,7 +248,7 @@
 
                 // 发起请求，让后端发送验证码
                 try {
-                    const res = await axios.post('/admin/sendEmail', {
+                    const res = await axios.post('/web/sendEmail', {
                         number: resetPass.number,
                         role: resetPass.role,
                         email: resetPass.email,
@@ -286,7 +259,7 @@
                         disabled2.value = false
                     }
                 } catch (error) {
-                    // console.log(error)
+                    console.log(error.response.data.error)
                     ElMessage.error(error.response.data.error)
                 }
             }
@@ -302,8 +275,8 @@
         resetPassFormRef.value.validate(async isValid => {
             if (isValid) {
                 try {
-                    const res = await axios.post('/admin/resetPass', resetPass)
-                    if (res.status === 201) {
+                    const res = await axios.post('/web/resetPass', resetPass)
+                    if (res.status === 200) {
                         ElMessage.success(`${res.data.message}，请重新登录`)
                         closeDialog()
                         router.push('/login')
@@ -318,9 +291,9 @@
     // 关闭对话框
     const closeDialog = () => {
         // 清除计时器
+        clearInterval(interval)
         sendEmailText.value = '发送'
         disabled.value = false
-        clearInterval(interval)
         resetPassFormRef.value.resetFields()
         emit('closeDialog')
     }
