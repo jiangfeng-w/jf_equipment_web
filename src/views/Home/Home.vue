@@ -87,13 +87,9 @@
 
     // 获取预约列表
     const getBookList = async () => {
-        const res = await axios.get('/web/equipment/getBookList')
+        const res = await axios.get(`/web/equipment/getBookList/${dayjs().startOf('day').valueOf()}`)
         // console.log(res.data.data)
-        // 筛选出未过期的
-        const notExpired = res.data.data.filter(item => {
-            return item.book_date >= dayjs().startOf('day').valueOf()
-        })
-        tableList.splice(0, tableList.length, ...notExpired)
+        tableList.splice(0, tableList.length, ...res.data.data)
     }
     onMounted(() => {
         getBookList()
