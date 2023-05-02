@@ -39,7 +39,7 @@
     }
 
     .el-menu-item {
-        margin-left: 20px;
+        padding-left: 35px !important;
     }
     .el-menu-item:hover {
         background-color: #253241;
