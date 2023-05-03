@@ -1,163 +1,187 @@
 <template>
-    <!-- 表格 -->
-    <el-table
-        ref="tableRef"
-        :data="tableList"
-        style="width: 100%"
-        table-layout="fixed"
-        border
-    >
-        <!-- 展开行 -->
-        <el-table-column
-            type="expand"
-            label="详细信息"
-            width="100"
-            fixed
-        >
-            <template #default="scope">
-                <ExpandInfo :info="scope.row"></ExpandInfo>
-            </template>
-        </el-table-column>
-        <!-- 预约编号 -->
-        <el-table-column
-            label="预约编号"
-            width="120"
-            prop="id"
-            fixed
-            sortable
-        ></el-table-column>
-        <!-- 设备编号 -->
-        <el-table-column
-            label="设备编号"
-            width="120"
-            prop="equip_id"
-            fixed
-            sortable
-        >
-            <template #default="scope">
-                {{ scope.row.equip_id.toString().padStart(8, '0') }}
-            </template>
-        </el-table-column>
-        <!-- 设备名称 -->
-        <el-table-column
-            prop="name"
-            label="设备名称"
-            fixed
-        ></el-table-column>
-        <!-- 预约人 -->
-        <el-table-column
-            prop="manager_name"
-            label="设备负责人"
-            width="120"
-        ></el-table-column>
-        <!-- 申请时间 -->
-        <el-table-column
-            prop="apply_time"
-            label="申请时间"
-            width="165"
-            sortable
-        >
-            <template #default="scope">
-                {{ formatTime(scope.row.apply_time) }}
-            </template>
-        </el-table-column>
-        <!-- 预约日期 -->
-        <el-table-column
-            prop="book_date"
-            label="预约日期"
-            width="165"
-            sortable
-        >
-            <template #default="scope">
-                {{ formatDate(scope.row.book_date) }}
-            </template>
-        </el-table-column>
-        <!-- 当前状态 -->
-        <el-table-column
-            label="当前状态"
-            width="100"
-        >
-            <template #default="scope">
-                <el-tag
-                    :type="getType(scope.row)"
+    <el-card>
+        <template #header>
+            <div class="card-header">
+                <span>预约管理</span>
+                <el-tooltip
+                    :show-after="200"
+                    :hide-after="0"
+                    class="box-item"
                     effect="dark"
+                    content="刷新列表"
+                    placement="top"
                 >
-                    {{ getState(scope.row) }}
-                </el-tag>
-            </template>
-        </el-table-column>
-        <!-- 操作 -->
-        <el-table-column
-            label="操作"
-            width="100"
-            fixed="right"
+                    <el-button
+                        circle
+                        :icon="Refresh"
+                        @click="getTableList()"
+                    ></el-button>
+                </el-tooltip>
+            </div>
+        </template>
+        <!-- 表格 -->
+        <el-table
+            ref="tableRef"
+            :data="tableList"
+            style="width: 100%"
+            table-layout="fixed"
+            border
         >
-            <template #default="scope">
-                <!-- 再次申请 -->
-                <el-popconfirm
-                    v-if="
-                        scope.row.state === 2 || scope.row.state === 3 || scope.row.state === 4 || scope.row.state === 5
-                    "
-                    width="160"
-                    confirm-button-text="是"
-                    cancel-button-text="否"
-                    title="跳转到设备详情页"
-                    @confirm="reApply(scope.row)"
-                >
-                    <template #reference>
-                        <el-button
-                            v-if="
-                                scope.row.state === 2 ||
-                                scope.row.state === 3 ||
-                                scope.row.state === 4 ||
-                                scope.row.state === 5
-                            "
-                            type="primary"
-                            size="small"
-                            link
-                            :icon="Setting"
-                            @click="loseFocus()"
-                        >
-                            再次预约
-                        </el-button>
-                    </template>
-                </el-popconfirm>
-                <!-- 使用完成 -->
-                <el-button
-                    v-if="scope.row.state === 1"
-                    type="primary"
-                    size="small"
-                    link
-                    :icon="Check"
-                    @click="completed(scope.row)"
-                >
-                    使用完成
-                </el-button>
-                <!-- 取消申请 -->
-                <el-popconfirm
-                    v-if="scope.row.state === 0"
-                    width="160"
-                    confirm-button-text="是"
-                    cancel-button-text="否"
-                    title="确认取消申请吗？"
-                    @confirm="cancel(scope.row)"
-                >
-                    <template #reference>
-                        <el-button
-                            v-if="scope.row.state === 0"
-                            type="primary"
-                            size="small"
-                            link
-                            :icon="Delete"
-                            @click="loseFocus()"
-                        >
-                            取消预约
-                        </el-button>
-                    </template>
-                </el-popconfirm>
-            </template>
-        </el-table-column>
-    </el-table>
+            <!-- 展开行 -->
+            <el-table-column
+                type="expand"
+                label="详细信息"
+                width="100"
+                fixed
+            >
+                <template #default="scope">
+                    <ExpandInfo :info="scope.row"></ExpandInfo>
+                </template>
+            </el-table-column>
+            <!-- 预约编号 -->
+            <el-table-column
+                label="预约编号"
+                width="120"
+                prop="id"
+                fixed
+                sortable
+            ></el-table-column>
+            <!-- 设备编号 -->
+            <el-table-column
+                label="设备编号"
+                width="120"
+                prop="equip_id"
+                fixed
+                sortable
+            >
+                <template #default="scope">
+                    {{ scope.row.equip_id.toString().padStart(8, '0') }}
+                </template>
+            </el-table-column>
+            <!-- 设备名称 -->
+            <el-table-column
+                prop="name"
+                label="设备名称"
+                fixed
+            ></el-table-column>
+            <!-- 预约人 -->
+            <el-table-column
+                prop="manager_name"
+                label="设备负责人"
+                width="120"
+            ></el-table-column>
+            <!-- 申请时间 -->
+            <el-table-column
+                prop="apply_time"
+                label="申请时间"
+                width="165"
+                sortable
+            >
+                <template #default="scope">
+                    {{ formatTime(scope.row.apply_time) }}
+                </template>
+            </el-table-column>
+            <!-- 预约日期 -->
+            <el-table-column
+                prop="book_date"
+                label="预约日期"
+                width="165"
+                sortable
+            >
+                <template #default="scope">
+                    {{ formatDate(scope.row.book_date) }}
+                </template>
+            </el-table-column>
+            <!-- 当前状态 -->
+            <el-table-column
+                label="当前状态"
+                width="100"
+            >
+                <template #default="scope">
+                    <el-tag
+                        :type="getType(scope.row)"
+                        effect="dark"
+                    >
+                        {{ getState(scope.row) }}
+                    </el-tag>
+                </template>
+            </el-table-column>
+            <!-- 操作 -->
+            <el-table-column
+                label="操作"
+                width="100"
+                fixed="right"
+            >
+                <template #default="scope">
+                    <!-- 再次申请 -->
+                    <el-popconfirm
+                        v-if="
+                            scope.row.state === 2 ||
+                            scope.row.state === 3 ||
+                            scope.row.state === 4 ||
+                            scope.row.state === 5
+                        "
+                        width="160"
+                        confirm-button-text="是"
+                        cancel-button-text="否"
+                        title="跳转到设备详情页"
+                        @confirm="reApply(scope.row)"
+                    >
+                        <template #reference>
+                            <el-button
+                                v-if="
+                                    scope.row.state === 2 ||
+                                    scope.row.state === 3 ||
+                                    scope.row.state === 4 ||
+                                    scope.row.state === 5
+                                "
+                                type="primary"
+                                size="small"
+                                link
+                                :icon="Setting"
+                                @click="loseFocus()"
+                            >
+                                再次预约
+                            </el-button>
+                        </template>
+                    </el-popconfirm>
+                    <!-- 使用完成 -->
+                    <el-button
+                        v-if="scope.row.state === 1"
+                        type="primary"
+                        size="small"
+                        link
+                        :icon="Check"
+                        @click="completed(scope.row)"
+                    >
+                        使用完成
+                    </el-button>
+                    <!-- 取消申请 -->
+                    <el-popconfirm
+                        v-if="scope.row.state === 0"
+                        width="160"
+                        confirm-button-text="是"
+                        cancel-button-text="否"
+                        title="确认取消申请吗？"
+                        @confirm="cancel(scope.row)"
+                    >
+                        <template #reference>
+                            <el-button
+                                v-if="scope.row.state === 0"
+                                type="primary"
+                                size="small"
+                                link
+                                :icon="Delete"
+                                @click="loseFocus()"
+                            >
+                                取消预约
+                            </el-button>
+                        </template>
+                    </el-popconfirm>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-card>
 
     <!-- 上传成果 -->
     <UseOutput
@@ -259,4 +283,18 @@
     }
     //#endregion
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+    :deep(.el-table__cell .cell) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .el-card {
+        min-height: 600px;
+    }
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
