@@ -92,6 +92,7 @@ const router = createRouter({
     routes,
 })
 
+const centers = ['/center', '/bookorder']
 router.beforeEach((to, from, next) => {
     // 打开进度条
     NProgress.start()
@@ -102,6 +103,8 @@ router.beforeEach((to, from, next) => {
         // 如果是学生且并未绑定邮箱
         if (store.state.userInfo.role === 4 && store.state.userInfo.is_bind_email === 0 && to.path !== '/bindemail') {
             next('/bindemail')
+        } else if (centers.includes(to.path) && !store.state.isLogin) {
+            next('/home')
         } else {
             next()
         }
