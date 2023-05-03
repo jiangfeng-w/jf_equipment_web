@@ -17,7 +17,7 @@
                 class="right"
                 v-if="equipData.name"
             >
-                <div class="name">{{ equipData.name }}</div>
+                <div class="name">{{ equipData.name }}（{{ equipData.id.toString().padStart(8, '0') }}）</div>
                 <el-tag
                     class="device_status"
                     effect="dark"
@@ -142,7 +142,24 @@
                         class="cannot_book"
                         v-else-if="equipData.state !== 0"
                     >
-                        <span>此设备目前不可预约</span>
+                        <a
+                            href="javascript:;"
+                            @click="router.push('/equiplist')"
+                        >
+                            此设备目前不可预约
+                        </a>
+                    </div>
+                    <!-- 未培训 -->
+                    <div
+                        class="cannot_book"
+                        v-else-if="store.state.userInfo.role === 4 && store.state.trained !== 2"
+                    >
+                        <a
+                            href="javascript:;"
+                            @click="router.push('/train')"
+                        >
+                            培训完成后可预约设备
+                        </a>
                     </div>
                     <!-- 预约表单 -->
                     <div
@@ -182,12 +199,6 @@
                             </el-form-item>
                         </el-form>
                     </div>
-                </el-tab-pane>
-                <el-tab-pane
-                    label="服务评论"
-                    name="servicecomments"
-                >
-                    服务评论
                 </el-tab-pane>
             </el-tabs>
         </el-card>

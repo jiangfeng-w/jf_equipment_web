@@ -5,7 +5,14 @@
         shadow="hover"
     >
         <div class="device_header">
-            <div class="device_name">{{ name }}</div>
+            <el-tooltip
+                class="box-item"
+                effect="dark"
+                :content="`${name}（${id.toString().padStart(8, '0')}）`"
+                placement="top"
+            >
+                <div class="device_name">{{ name }}（{{ id.toString().padStart(8, '0') }}）</div>
+            </el-tooltip>
             <div class="img_container">
                 <img
                     :src="pic"

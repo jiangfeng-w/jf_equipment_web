@@ -100,10 +100,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
         next()
     } else {
-        // 如果是学生且并未绑定邮箱
-        if (store.state.userInfo.role === 4 && store.state.userInfo.is_bind_email === 0 && to.path !== '/bindemail') {
-            next('/bindemail')
-        } else if (centers.includes(to.path) && !store.state.isLogin) {
+        if (centers.includes(to.path) && !store.state.isLogin) {
             next('/home')
         } else {
             next()

@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="info-container">
-            <div class="name">{{ info.name }}</div>
+            <div class="name">{{ info.name }}（{{ info.equip_id.toString().padStart(8, '0') }}）</div>
             <ul>
                 <li class="info-row">
                     <span class="info-key">预约日期：</span>

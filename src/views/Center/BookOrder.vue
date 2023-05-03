@@ -26,6 +26,18 @@
             fixed
             sortable
         ></el-table-column>
+        <!-- 设备编号 -->
+        <el-table-column
+            label="设备编号"
+            width="120"
+            prop="equip_id"
+            fixed
+            sortable
+        >
+            <template #default="scope">
+                {{ scope.row.equip_id.toString().padStart(8, '0') }}
+            </template>
+        </el-table-column>
         <!-- 设备名称 -->
         <el-table-column
             prop="name"
@@ -40,8 +52,10 @@
         ></el-table-column>
         <!-- 申请时间 -->
         <el-table-column
+            prop="apply_time"
             label="申请时间"
             width="165"
+            sortable
         >
             <template #default="scope">
                 {{ formatTime(scope.row.apply_time) }}
@@ -49,8 +63,10 @@
         </el-table-column>
         <!-- 预约日期 -->
         <el-table-column
+            prop="book_date"
             label="预约日期"
             width="165"
+            sortable
         >
             <template #default="scope">
                 {{ formatDate(scope.row.book_date) }}
