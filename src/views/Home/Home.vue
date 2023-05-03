@@ -158,7 +158,7 @@
     }
     // 计算状态
     const getState = state => {
-        const states = ['待审核', '未通过', '已通过']
+        const states = ['待审核', '已通过', '未通过']
         return states[state]
     }
 </script>
