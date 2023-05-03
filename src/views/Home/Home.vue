@@ -50,6 +50,7 @@
                 </el-card>
             </div>
         </el-col>
+        <!-- 热门排行榜 -->
         <el-col :span="8">
             <div class="right">
                 <el-card
@@ -66,10 +67,10 @@
                             <li
                                 class="row_item"
                                 v-for="(item, index) in rangList"
-                                :key="item.device_id"
+                                :key="index"
                             >
                                 <span class="index">{{ index + 1 }}</span>
-                                <span class="device_name">{{ item.device_name }}</span>
+                                <span class="device_name">{{ item.name }}</span>
                                 <span class="borrow_count">{{ item.borrow_count }}次</span>
                             </li>
                         </ul>
@@ -91,65 +92,21 @@
         // console.log(res.data.data)
         tableList.splice(0, tableList.length, ...res.data.data)
     }
+    // 获取排行榜
+    const getRangList = async () => {
+        const res = await axios.get(`/web/equipment/getRangList`)
+        // console.log(res.data.data)
+        rangList.splice(0, rangList.length, ...res.data.data)
+    }
     onMounted(() => {
         getBookList()
+        getRangList()
     })
 
     // 预约表格
     const tableList = reactive([])
     // 排行榜
-    const rangList = reactive([
-        {
-            device_id: '1214',
-            device_name: '液相色谱仪',
-            borrow_count: 5,
-        },
-        {
-            device_id: '1215',
-            device_name: '质谱仪',
-            borrow_count: 3,
-        },
-        {
-            device_id: '1216',
-            device_name: '红外光谱仪',
-            borrow_count: 2,
-        },
-        {
-            device_id: '1217',
-            device_name: '紫外光谱仪',
-            borrow_count: 7,
-        },
-        {
-            device_id: '1218',
-            device_name: '电化学工作站',
-            borrow_count: 1,
-        },
-        {
-            device_id: '1219',
-            device_name: '热重分析仪',
-            borrow_count: 4,
-        },
-        {
-            device_id: '1220',
-            device_name: '原子吸收光谱仪',
-            borrow_count: 0,
-        },
-        {
-            device_id: '1221',
-            device_name: '电感耦合等离子体质谱仪',
-            borrow_count: 6,
-        },
-        {
-            device_id: '1222',
-            device_name: '核磁共振仪',
-            borrow_count: 8,
-        },
-        {
-            device_id: '1223',
-            device_name: '电子显微镜',
-            borrow_count: 9,
-        },
-    ])
+    const rangList = reactive([])
 
     // 格式化时间
     const formatTime = timeStamp => {
