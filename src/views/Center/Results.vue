@@ -46,7 +46,7 @@
             sortable
         >
             <template #default="scope">
-                {{ formatTime(scope.row.apply_time) }}
+                {{ formatTime(scope.row.submit_time) }}
             </template>
         </el-table-column>
         <!-- 预约日期 -->
