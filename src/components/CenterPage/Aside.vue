@@ -10,12 +10,17 @@
             <el-icon><User /></el-icon>
             <span>个人信息</span>
         </el-menu-item>
+        <!-- 预约管理 -->
+        <el-menu-item index="/bookorder">
+            <el-icon><Tickets /></el-icon>
+            <span>预约管理</span>
+        </el-menu-item>
     </el-menu>
 </template>
 <script setup>
     import { useRoute, useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import { User } from '@element-plus/icons-vue'
+    import { User, Tickets } from '@element-plus/icons-vue'
 
     const store = useStore()
     const route = useRoute()

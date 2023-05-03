@@ -74,6 +74,15 @@ const routes = [
                 },
                 component: () => import('@/views/Center/Center.vue'),
             },
+            // 预约管理
+            {
+                path: '/bookorder',
+                name: 'bookorder',
+                meta: {
+                    zh_name: ['预约管理'],
+                },
+                component: () => import('@/views/Center/BookOrder.vue'),
+            },
         ],
     },
 ]
