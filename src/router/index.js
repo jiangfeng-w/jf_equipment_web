@@ -83,6 +83,15 @@ const routes = [
                 },
                 component: () => import('@/views/Center/BookOrder.vue'),
             },
+            // 成果管理
+            {
+                path: '/results',
+                name: 'results',
+                meta: {
+                    zh_name: ['成果产出'],
+                },
+                component: () => import('@/views/Center/Results.vue'),
+            },
         ],
     },
 ]
@@ -92,7 +101,7 @@ const router = createRouter({
     routes,
 })
 
-const centers = ['/center', '/bookorder']
+const centers = ['/center', '/bookorder', '/results']
 router.beforeEach((to, from, next) => {
     // 打开进度条
     NProgress.start()

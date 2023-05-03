@@ -188,12 +188,7 @@
     const router = useRouter()
     // 获取预约列表
     const getTableList = async () => {
-        let res
-        if (store.state.userInfo.role === 1) {
-            res = await axios.post('/web/equipment/getBookList')
-        } else {
-            res = await axios.post(`/web/equipment/getBookList/${store.state.userInfo.number}`)
-        }
+        const res = await axios.post(`/web/equipment/getBookList/${store.state.userInfo.number}`)
 
         // console.log(res.data.data)
         tableList.splice(0, tableList.length, ...res.data.data)

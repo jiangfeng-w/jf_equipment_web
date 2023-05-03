@@ -15,12 +15,17 @@
             <el-icon><Tickets /></el-icon>
             <span>预约管理</span>
         </el-menu-item>
+        <!-- 成果管理 -->
+        <el-menu-item index="/results">
+            <el-icon><PieChart /></el-icon>
+            <span>成果产出</span>
+        </el-menu-item>
     </el-menu>
 </template>
 <script setup>
     import { useRoute, useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import { User, Tickets } from '@element-plus/icons-vue'
+    import { User, Tickets, PieChart } from '@element-plus/icons-vue'
 
     const store = useStore()
     const route = useRoute()

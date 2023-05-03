@@ -152,7 +152,7 @@
                     <!-- 未培训 -->
                     <div
                         class="cannot_book"
-                        v-else-if="store.state.userInfo.role === 4 && store.state.trained !== 2"
+                        v-else-if="store.state.userInfo.role === 4 && store.state.userInfo.trained !== 2"
                     >
                         <a
                             href="javascript:;"
