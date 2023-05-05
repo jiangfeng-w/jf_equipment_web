@@ -96,7 +96,7 @@
                     size="small"
                     link
                     :icon="Plus"
-                    @click="loseFocus"
+                    @click="signUpCourse(scope.row, 1)"
                 >
                     报名课程
                 </el-button>
@@ -106,22 +106,33 @@
                     size="small"
                     link
                     :icon="View"
-                    @click="loseFocus"
+                    @click="signUpCourse(scope.row, 0)"
                 >
                     查看课程
                 </el-button>
             </template>
         </el-table-column>
     </el-table>
+
+    <!-- 报名对话框 -->
+    <SignUpCourse
+        v-model="signUpCourseDialog"
+        :signUpCourseDialogData="signUpCourseDialogData"
+        :signup="signup"
+        @closeDialog="closeDialog"
+        @getTableList="getTableList"
+        @changeTab="changeTab"
+    ></SignUpCourse>
 </template>
 <script setup>
-    import { ref, reactive, onMounted } from 'vue'
-    import { useRoute, useRouter } from 'vue-router'
-    import { useStore } from 'vuex'
+    import { ref, reactive, onMounted, defineExpose } from 'vue'
     import { View, Plus } from '@element-plus/icons-vue'
     import dayjs from 'dayjs'
     import axios from 'axios'
     import loseFocus from '@/util/loseFocus'
+    import SignUpCourse from '@/components/Train/SignUpCourse.vue'
+
+    const emits = defineEmits(['changeTab'])
 
     // 获取列表
     const getTableList = async () => {
@@ -129,6 +140,10 @@
         tableList.splice(0, tableList.length, ...res.data.data)
         // console.log(tableList)
     }
+    // 暴露出方法
+    defineExpose({
+        getTableList,
+    })
     // 表格数据
     const tableList = reactive([])
     // 获取列表
@@ -143,8 +158,33 @@
     }
     // 获取设备状态
     const getState = data => {
-        const states = ['未报名', '已截止']
+        if (data.is_full_count) {
+            return '已满员'
+        }
+        const states = ['可报名', '已截止']
         return states[data.is_full_count]
+    }
+
+    // 对话框
+    const signUpCourseDialog = ref(false)
+    const signUpCourseDialogData = ref()
+    const signup = ref(0)
+    //
+    // 关闭对话框
+    const closeDialog = () => {
+        signUpCourseDialog.value = false
+    }
+    // 报名课程
+    const signUpCourse = (data, isSignUp) => {
+        loseFocus()
+        signUpCourseDialogData.value = data
+        signup.value = isSignUp
+        signUpCourseDialog.value = true
+    }
+
+    // 切换标签页
+    const changeTab = newActiveName => {
+        emits('changeTab', newActiveName)
     }
 </script>
 <style lang="scss" scoped>
