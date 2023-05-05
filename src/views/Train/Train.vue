@@ -31,7 +31,9 @@
         <el-tab-pane
             label="我的培训课程"
             name="myTrain"
-        ></el-tab-pane>
+        >
+            <MyCourses ref="myCoursesRef"></MyCourses>
+        </el-tab-pane>
     </el-tabs>
 </template>
 <script setup>
@@ -41,6 +43,7 @@
     import axios from 'axios'
     import dayjs from 'dayjs'
     import TrainCourses from '@/components/Train/TrainCourses.vue'
+    import MyCourses from '@/components/Train/MyCourses.vue'
 
     const store = useStore()
     const router = useRouter()
@@ -52,13 +55,17 @@
         activeName.value = newActiveName
     }
     const trainCoursesRef = ref()
+    const myCoursesRef = ref()
 
     // 标签页改变
     const tabChange = newActiveName => {
         if (newActiveName === 'trainList') {
             trainCoursesRef.value.getTableList()
+            return
         }
         if (newActiveName === 'myTrain') {
+            myCoursesRef.value.getTableList()
+            return
         }
     }
 </script>

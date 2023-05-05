@@ -153,13 +153,13 @@
                     size="large"
                     @click="submitForm()"
                 >
-                    提交
+                    报名
                 </el-button>
                 <el-button
                     size="large"
                     @click="closeDialog()"
                 >
-                    取消
+                    关闭
                 </el-button>
             </div>
         </template>
@@ -171,7 +171,6 @@
     import axios from 'axios'
     import dayjs from 'dayjs'
     import loseFocus from '@/util/loseFocus'
-    import uploadFile from '@/util/uploadFile'
 
     const props = defineProps({
         signUpCourseDialogData: Object,
@@ -220,7 +219,8 @@
     }
     // 提交表单
     const submitForm = async () => {
-        console.log(formData)
+        loseFocus()
+        // console.log(formData)
         try {
             const res = await axios.post('/web/train/signUpCourse', formData)
             if (res.status === 201) {
