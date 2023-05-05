@@ -18,7 +18,12 @@
             >
                 <el-menu-item index="/home">首页</el-menu-item>
                 <el-menu-item index="/equiplist">预约设备</el-menu-item>
-                <el-menu-item index="/train">操作培训</el-menu-item>
+                <el-menu-item
+                    v-if="store.state.userInfo.role === 4"
+                    index="/train"
+                >
+                    操作培训
+                </el-menu-item>
             </el-menu>
 
             <!-- 右边 -->

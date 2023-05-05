@@ -56,6 +56,9 @@ const routes = [
             {
                 path: '/train',
                 name: 'train',
+                meta: {
+                    role: 4,
+                },
                 component: () => import('@/views/Train/Train.vue'),
             },
         ],
@@ -112,7 +115,17 @@ router.beforeEach((to, from, next) => {
         if (centers.includes(to.path) && !store.state.isLogin) {
             next('/home')
         } else {
-            next()
+            // 权限判断
+            if (to.meta.role) {
+                if (to.meta.role === store.state.userInfo.role) {
+                    next()
+                } else {
+                    // 如果用户没有权限，重定向到404页面
+                    next('/notfound')
+                }
+            } else {
+                next()
+            }
         }
     }
 })
