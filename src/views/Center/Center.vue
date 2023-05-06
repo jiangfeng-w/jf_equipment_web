@@ -87,7 +87,18 @@
                                 label="电子邮箱"
                                 prop="email"
                             >
-                                <el-input v-model="tempUserInfo.email" />
+                                <el-input
+                                    v-if="store.state.userInfo.email"
+                                    v-model="tempUserInfo.email"
+                                />
+                                <el-button
+                                    v-else
+                                    type="primary"
+                                    @click="router.push('/bindemail')"
+                                    class="bindemail"
+                                >
+                                    绑定邮箱
+                                </el-button>
                             </el-form-item>
                             <!-- 头像 -->
                             <el-form-item
@@ -171,6 +182,7 @@
                             </el-form-item>
                             <!-- 重置密码 -->
                             <div
+                                v-if="store.state.userInfo.email"
                                 class="forgetPassBtn"
                                 @click="showResetPass"
                             >
@@ -255,7 +267,7 @@
     // 验证规则
     const userFormFules = reactive({
         phone_number: [
-            { required: true, message: '请输入手机号' },
+            { required: true, message: '请输入手机号', trigger: 'blur' },
             {
                 validator: (rule, value, callback) => {
                     const reg = /^[1][3-9][0-9]{9}$/
@@ -268,7 +280,7 @@
             },
         ],
         email: [
-            { required: true, message: '请输入邮箱地址' },
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
             {
                 validator: (rule, value, callback) => {
                     const emailRegex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
