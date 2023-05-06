@@ -56,10 +56,6 @@
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
 
-    onMounted(() => {
-        ElMessage.warning('第一次登录系统需绑定邮箱')
-    })
-
     const router = useRouter()
     const store = useStore()
     // 绑定邮箱表单
