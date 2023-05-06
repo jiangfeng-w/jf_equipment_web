@@ -63,6 +63,7 @@
     const bindForm = reactive({
         email: '',
         email_code: '',
+        number: store.state.userInfo.number,
     })
     // 验证规则
     const bindRules = reactive({
@@ -130,6 +131,7 @@
         bindFormRef.value.validateField(['email'], async isValid => {
             // 验证通过
             if (isValid) {
+                // console.log(bindForm)
                 // 开始倒计时
                 countDown()
                 // 发起请求，让后端发送验证码
