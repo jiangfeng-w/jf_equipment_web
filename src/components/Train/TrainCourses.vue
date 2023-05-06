@@ -90,8 +90,20 @@
             fixed="right"
         >
             <template #default="scope">
+                <!-- 已经报名 -->
+                <el-button
+                    v-if="myList.includes(scope.row.id)"
+                    type="primary"
+                    size="small"
+                    link
+                    :icon="Star"
+                    @click="loseFocus"
+                >
+                    已经报名
+                </el-button>
                 <!-- 报名申请 -->
                 <el-button
+                    v-else
                     type="primary"
                     size="small"
                     link
@@ -126,7 +138,8 @@
 </template>
 <script setup>
     import { ref, reactive, onMounted, defineExpose } from 'vue'
-    import { View, Plus } from '@element-plus/icons-vue'
+    import { useStore } from 'vuex'
+    import { View, Plus, Star } from '@element-plus/icons-vue'
     import dayjs from 'dayjs'
     import axios from 'axios'
     import loseFocus from '@/util/loseFocus'
@@ -134,10 +147,12 @@
 
     const emits = defineEmits(['changeTab'])
 
+    const store = useStore()
     // 获取列表
     const getTableList = async () => {
-        const res = await axios.get(`/web/train/trainCourseList`)
+        const res = await axios.get(`/web/train/trainCourseList/${store.state.userInfo.number}`)
         tableList.splice(0, tableList.length, ...res.data.data)
+        myList.splice(0, myList.length, ...res.data.myList)
         // console.log(tableList)
     }
     // 暴露出方法
@@ -146,6 +161,8 @@
     })
     // 表格数据
     const tableList = reactive([])
+    // 已经报名的课程id
+    const myList = reactive([])
     // 获取列表
     onMounted(() => {
         getTableList()
