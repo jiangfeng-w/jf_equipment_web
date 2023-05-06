@@ -149,8 +149,11 @@
 
     const store = useStore()
     // 获取列表
-    const getTableList = async () => {
-        const res = await axios.get(`/web/train/trainCourseList/${store.state.userInfo.number}`)
+    const getTableList = async equip_name => {
+        const res = await axios.post(`/web/train/trainCourseList`, {
+            student_number: store.state.userInfo.number,
+            equip_name,
+        })
         tableList.splice(0, tableList.length, ...res.data.data)
         myList.splice(0, myList.length, ...res.data.myList)
         // console.log(tableList)

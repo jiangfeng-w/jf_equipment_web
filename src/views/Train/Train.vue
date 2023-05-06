@@ -1,21 +1,23 @@
 <template>
-    <!-- 未登录 -->
-    <div
-        class="please_login"
-        v-if="!store.state.isLogin"
-    >
-        <a
-            href="javascript:;"
-            @click="router.push('/login')"
-        >
-            未登录无法预约设备
-        </a>
-    </div>
     <!-- 标签页 -->
+    <!-- <div class="btn"> -->
+    <el-input
+        v-model="searchText"
+        placeholder="搜索设备名称"
+        @keyup.enter="tabChange"
+        clearable
+    >
+        <template #append>
+            <el-button
+                :icon="Search"
+                @click="tabChange"
+            ></el-button>
+        </template>
+    </el-input>
+    <!-- </div> -->
     <el-tabs
-        v-else
         v-model="activeName"
-        class="demo-tabs"
+        class="tabs"
         @tab-change="tabChange"
     >
         <el-tab-pane
@@ -37,7 +39,8 @@
     </el-tabs>
 </template>
 <script setup>
-    import { ref, reactive, onMounted } from 'vue'
+    import { ref } from 'vue'
+    import { Search } from '@element-plus/icons-vue'
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
     import axios from 'axios'
@@ -57,24 +60,30 @@
     const trainCoursesRef = ref()
     const myCoursesRef = ref()
 
+    // 输入框文字
+    const searchText = ref('')
     // 标签页改变
-    const tabChange = newActiveName => {
-        if (newActiveName === 'trainList') {
-            trainCoursesRef.value.getTableList()
+    const tabChange = () => {
+        if (activeName.value === 'trainList') {
+            trainCoursesRef.value.getTableList(searchText.value)
             return
         }
-        if (newActiveName === 'myTrain') {
-            myCoursesRef.value.getTableList()
+        if (activeName.value === 'myTrain') {
+            myCoursesRef.value.getTableList(searchText.value)
             return
         }
     }
 </script>
 <style lang="scss" scoped>
-    .please_login {
-        height: 500px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 30px;
+    .tabs {
+        background-color: #fff;
+        padding: 20px;
+        min-height: 300px;
+    }
+    .el-input {
+        width: 400px;
+        position: absolute;
+        z-index: 3;
+        margin: 20px 0 0 838px;
     }
 </style>
