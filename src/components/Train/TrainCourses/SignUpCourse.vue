@@ -100,6 +100,7 @@
                 </div>
             </template>
             <el-form
+                v-if="store.state.userInfo.email"
                 :inline="true"
                 ref="formDataRef"
                 :model="formData"
@@ -143,6 +144,19 @@
                     />
                 </el-form-item>
             </el-form>
+
+            <!-- 绑定邮箱 -->
+            <div
+                class="bind_email"
+                v-else
+            >
+                <a
+                    href="javascript:;"
+                    @click="router.push('/bindemail')"
+                >
+                    绑定邮箱后才能参加培训课程
+                </a>
+            </div>
         </el-card>
         <!-- 按钮 -->
         <template #footer>
@@ -168,10 +182,13 @@
 <script setup>
     import { ref, reactive, onMounted } from 'vue'
     import { useStore } from 'vuex'
+    import { useRouter } from 'vue-router'
     import axios from 'axios'
     import dayjs from 'dayjs'
     import loseFocus from '@/util/loseFocus'
 
+    const router = useRouter()
+    const store = useStore()
     const props = defineProps({
         signUpCourseDialogData: Object,
         signup: Number,
@@ -198,7 +215,6 @@
         return formattedTime
     }
 
-    const store = useStore()
     // 专业年级
     const majorGrade = ref(`${store.state.userInfo.grade} / ${store.state.userInfo.major}`)
     // 报名表单
@@ -290,5 +306,13 @@
     }
     .el-pagination {
         margin-top: 15px;
+    }
+
+    .bind_email {
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
     }
 </style>
