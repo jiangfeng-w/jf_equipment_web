@@ -101,6 +101,17 @@
                 >
                     已经报名
                 </el-button>
+                <!-- 报名截止 -->
+                <el-button
+                    v-else-if="scope.row.state"
+                    type="primary"
+                    size="small"
+                    link
+                    :icon="Clock"
+                    @click="loseFocus"
+                >
+                    报名截止
+                </el-button>
                 <!-- 报名申请 -->
                 <el-button
                     v-else
@@ -139,7 +150,7 @@
 <script setup>
     import { ref, reactive, onMounted, defineExpose } from 'vue'
     import { useStore } from 'vuex'
-    import { View, Plus, Star } from '@element-plus/icons-vue'
+    import { View, Plus, Star, Clock } from '@element-plus/icons-vue'
     import dayjs from 'dayjs'
     import axios from 'axios'
     import loseFocus from '@/util/loseFocus'
