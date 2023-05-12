@@ -174,7 +174,7 @@
 <style lang="scss" scoped>
     .bind_page {
         height: 100%;
-        background-image: url('https://sso.swpu.edu.cn/linkid/api/image/download/1626424617933notloggedinbg1600900.jpg');
+        background-image: url('@/assets/login.jpg');
         background-size: cover;
         .bind {
             border-radius: 5px;
