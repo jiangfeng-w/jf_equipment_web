@@ -109,11 +109,12 @@
         <!-- 设备状态 -->
         <el-form-item label="设备状态">
             <el-select
-                v-model="searchForm.state"
+                v-model="state"
                 clearable
                 filterable
                 multiple
-                placeholder="请选择设备状态"
+                placeholder="请选择是否可预约"
+                @change="stateChange"
             >
                 <el-option
                     v-for="item in states"
@@ -129,7 +130,7 @@
             class="time"
         >
             <el-date-picker
-                v-model="searchForm.buy_time"
+                v-model="buy_time"
                 type="daterange"
                 :shortcuts="shortcuts"
                 range-separator="~"
@@ -213,6 +214,10 @@
         pageSize: 8,
         currentPage: 1,
     })
+    // 选择状态
+    const state = ref([])
+    // 选择时间
+    const buy_time = ref([])
 
     // 搜索
     const search = async () => {
@@ -232,6 +237,8 @@
         searchForm.price_range = []
         searchForm.buy_time = []
         searchForm.state = []
+        state.value = []
+        buy_time.value = []
         getLength()
         getTableList()
     }
@@ -284,32 +291,12 @@
     // 设备状态
     const states = [
         {
-            label: '正常状态',
+            label: '可预约',
             value: 0,
         },
         {
-            label: '维修申请状态',
+            label: '不可预约',
             value: 1,
-        },
-        {
-            label: '维修申请失败',
-            value: 2,
-        },
-        {
-            label: '维修中',
-            value: 3,
-        },
-        {
-            label: '报废申请状态',
-            value: 4,
-        },
-        {
-            label: '报废申请失败',
-            value: 5,
-        },
-        {
-            label: '已报废',
-            value: 7,
         },
     ]
     //#endregion
@@ -376,13 +363,25 @@
         },
     ]
 
-    //#region 选择时间后格式化
+    // 选择时间后格式化
     const formatTimeStamp = value => {
-        searchForm.buy_time = value.map(item => {
-            return dayjs(item).valueOf()
-        })
+        if (value) {
+            searchForm.buy_time = value.map(item => {
+                return dayjs(item).valueOf()
+            })
+        } else {
+            searchForm.buy_time = []
+        }
     }
-    //#endregion
+    // 选择状态的回调函数
+    const stateChange = val => {
+        let state = []
+        state.splice(0, state.length, ...val)
+        if (state.includes(1)) {
+            state.push(2, 3, 4, 5, 6)
+        }
+        searchForm.state.splice(0, searchForm.state.length, ...state)
+    }
 
     //#endregion
 
