@@ -56,7 +56,7 @@
         name: String,
         pic: String,
         state: Number,
-        buy_time: Number,
+        buy_time: [Number, String],
         discipline_classification: String,
         manage_classification: String,
         function_range: String,
@@ -71,8 +71,6 @@
     const router = useRouter()
     // 预约设备详情页
     const goToBookEquip = () => {
-        // const url = router.resolve({ name: 'equipdetail', params: { id: props.id } }).href
-        // window.open(url, '_blank')
         router.push({
             name: 'equipdetail',
             params: { id: props.id },
