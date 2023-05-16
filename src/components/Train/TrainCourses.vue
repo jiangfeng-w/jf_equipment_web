@@ -192,7 +192,7 @@
         if (data.train_total_count === data.signup_count) {
             return '已满员'
         }
-        const states = ['可报名', '已截止']
+        const states = ['可报名', '已截止', '已截止', '已截止']
         return states[data.state]
     }
 
